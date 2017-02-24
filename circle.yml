@@ -27,7 +27,7 @@ stages:
     steps:
       - type: shell
         name: Install System Packages
-        command: apt-get update && apt-get -y -f install imagemagick php5-imagick libfreetype6-dev git curl libpng12-dev php5-gd php5-cli libc-client-dev libkrb5-dev MariaDB-client php-soap libxml2-dev
+        command: apt-get update && apt-get -y -f install imagemagick php5-imagick libjpeg62-turbo-dev libfreetype6-dev git curl libpng12-dev php5-gd php5-cli libc-client-dev libkrb5-dev MariaDB-client php-soap libxml2-dev
       - type: checkout
       - type: shell
         name: Install PHP Extensions
@@ -37,7 +37,7 @@ stages:
         command: docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
       - type: shell
         name: Configure PHP GD extension
-        command: docker-php-ext-configure gd --with-freetype-dir \
+        command: docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
       - type: shell
         name: Install PHP Imap
         command: docker-php-ext-install imap
