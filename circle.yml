@@ -1,7 +1,7 @@
 version: 2
 executorType: docker
 containerInfo:
-  - image: php:7.0.4-apache
+  - image: php:5.6.14-apache
     env:
       - APP_ENV=local
       - APP_DEBUG=true
@@ -27,11 +27,11 @@ stages:
     steps:
       - type: shell
         name: Install System Packages
-        command: apt-get update && apt-get -y -f install imagemagick php7.0-imagick libjpeg62-turbo-dev libfreetype6-dev git curl libpng12-dev php7.0-gd php7.0-cli libc-client-dev libkrb5-dev MariaDB-client php-soap libxml2-dev
+        command: apt-get update && apt-get -y -f install imagemagick php5-imagick libjpeg62-turbo-dev libfreetype6-dev git curl libpng12-dev php5-gd php5-cli libc-client-dev libkrb5-dev MariaDB-client php-soap libxml2-dev
       - type: checkout
       - type: shell
         name: Install PHP Extensions
-        command: docker-php-ext-install pdo pdo_mysql zip mbstring soap gd
+        command: docker-php-ext-install pdo pdo_mysql zip mbstring soap
       - type: shell
         name: Configure PHP Imap extension
         command: docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
@@ -40,7 +40,7 @@ stages:
         command: docker-php-ext-configure gd --with-freetype-dir=/usr/include/freetype2 --with-jpeg-dir=/usr/include/ \
       - type: shell
         name: Install PHP Imap
-        command: docker-php-ext-install imap
+        command: docker-php-ext-install imap gd
       - type: shell
         name: Install Composer
         command: |
