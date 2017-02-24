@@ -39,20 +39,20 @@ stages:
         name: Configure PHP GD extension
         command: docker-php-ext-configure gd --with-freetype-dir=/usr/include/freetype2 --with-jpeg-dir=/usr/include/ \
       - type: shell
-        name: Install PHP Imap
+        name: Install Imap & gd extensions
         command: docker-php-ext-install imap gd
       - type: shell
         name: Install Composer
         command: |
          curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
       - type: shell
-        name: Install Project Dependencies
+        name: Install composer asset plugin
         command: composer global require "fxp/composer-asset-plugin:^1.2.0"
       - type: shell
         name: Install Project Dependencies
         command: composer install
       - type: shell
-        name: Install Project Dependencies
+        name: phpinfo
         command: php -i
         # unit
       #- type: shell
