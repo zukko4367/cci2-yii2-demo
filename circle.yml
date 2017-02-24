@@ -33,8 +33,11 @@ stages:
         name: Install PHP Extensions
         command: docker-php-ext-install pdo pdo_mysql zip mbstring soap gd
       - type: shell
-        name: Configure PHP Imap
+        name: Configure PHP Imap extension
         command: docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
+      - type: shell
+        name: Configure PHP GD extension
+        command: docker-php-ext-configure gd --with-freetype-dir \
       - type: shell
         name: Install PHP Imap
         command: docker-php-ext-install imap
