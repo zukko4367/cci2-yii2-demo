@@ -46,9 +46,9 @@ stages:
         name: Install Project Dependencies
         command: composer install
         # unit
-      - type: shell
-        name: Run migrations
-        command: ./tests/bin/yii migrate/up --interactive=0
+      #- type: shell
+      #  name: Run migrations
+      #  command: ./tests/bin/yii migrate/up --interactive=0
       - type: shell
         name: Run functional tests
         command: vendor\bin\codecept run --debug
