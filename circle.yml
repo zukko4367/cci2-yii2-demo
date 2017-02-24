@@ -48,8 +48,8 @@ stages:
         # unit
       - type: shell
         name: Run migrations
-        command: ./tests/unit/yii migrate/up --interactive=0
+        command: ./tests/bin/yii migrate/up --interactive=0
       - type: shell
         name: Run functional tests
-        command: php vendor/codeception/codeception/codecept build && php vendor/codeception/codeception/codecept run unit  --debug
+        command: vendor\bin\codecept run --debug
         # functional
