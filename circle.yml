@@ -37,7 +37,7 @@ stages:
         command: docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
       - type: shell
         name: Configure PHP GD extension
-        command: docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+        command: docker-php-ext-configure gd --with-freetype-dir=/usr/include/freetype2 --with-jpeg-dir=/usr/include/ \
       - type: shell
         name: Install PHP Imap
         command: docker-php-ext-install imap
