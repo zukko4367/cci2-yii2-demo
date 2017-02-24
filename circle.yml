@@ -51,6 +51,9 @@ stages:
       - type: shell
         name: Install Project Dependencies
         command: composer install
+      - type: shell
+        name: Install Project Dependencies
+        command: php -i
         # unit
       #- type: shell
       #  name: Run migrations
