@@ -1,0 +1,55 @@
+version: 2
+executorType: docker
+containerInfo:
+  - image: php:5.5.31-apache
+    env:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - APP_KEY=kjcndjjksddwdwdw
+      - DB_CONNECTION=mysql
+      - DB_HOST=127.0.0.1
+      - DB_PORT=3306
+      - DB_DATABASE=db_test
+      - DB_PASSWORD=password
+      - DB_USERNAME=root
+      - CACHE_DRIVER=memcached
+      - QUEUE_DRIVER=sync
+      - TZ=Europe/Moscow
+      - TIMEZONE=Europe/Moscow
+  - image: mariadb:5.5
+    env:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=db_test
+      #MYSQL_ALLOW_EMPTY_PASSWORD=1
+stages:
+  build:
+    workDir: /var/www/html
+    steps:
+      - type: shell
+        name: Install System Packages
+        command: apt-get update && apt-get -y install git curl php5-cli libc-client-dev libkrb5-dev MariaDB-client php-soap libxml2-dev
+      - type: checkout
+      - type: shell
+        name: Install PHP Extensions
+        command: docker-php-ext-install pdo pdo_mysql zip mbstring soap
+      - type: shell
+        name: Configure PHP Imap
+        command: docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
+      - type: shell
+        name: Install PHP Imap
+        command: docker-php-ext-install imap
+      - type: shell
+        name: Install Composer
+        command: |
+         curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+      - type: shell
+        name: Install Project Dependencies
+        command: composer install
+        # unit
+      - type: shell
+        name: Run migrations
+        command: ./tests/unit/yii migrate/up --interactive=0
+      - type: shell
+        name: Run functional tests
+        command: php vendor/codeception/codeception/codecept build && php vendor/codeception/codeception/codecept run unit  --debug
+        # functional
