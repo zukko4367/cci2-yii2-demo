@@ -31,7 +31,7 @@ stages:
       - type: checkout
       - type: shell
         name: Install PHP Extensions
-        command: docker-php-ext-install pdo pdo_mysql zip mbstring soap gd imagick
+        command: docker-php-ext-install pdo pdo_mysql zip mbstring soap gd
       - type: shell
         name: Configure PHP Imap
         command: docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
