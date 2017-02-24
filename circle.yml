@@ -44,6 +44,9 @@ stages:
          curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
       - type: shell
         name: Install Project Dependencies
+        command: composer global require "fxp/composer-asset-plugin:^1.2.0"
+      - type: shell
+        name: Install Project Dependencies
         command: composer install
         # unit
       #- type: shell
