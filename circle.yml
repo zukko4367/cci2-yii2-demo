@@ -61,4 +61,6 @@ stages:
       - type: shell
         name: Run functional tests
         command: vendor/bin/codecept run --debug
-        # functional
+      - type: shell
+        name: Check curl
+        command: curl http://localhost/
