@@ -31,7 +31,7 @@ stages:
       - type: checkout
       - type: shell
         name: Shell commands
-        command: cat /etc/hosts
+        command: curl 127.0.0.1:3000
       - type: shell
         name: Install PHP Extensions
         command: docker-php-ext-install pdo pdo_mysql zip mbstring soap
