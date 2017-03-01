@@ -63,4 +63,4 @@ stages:
         command: vendor/bin/codecept run --debug
       - type: shell
         name: Check curl
-        command: curl http://localhost/
+        command: curl http://127.0.0.1/

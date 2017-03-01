@@ -10,14 +10,16 @@ class_name: FunctionalTester
 modules:
     enabled:
       - Filesystem
-      - REST
-      - Yii2
       - PhpBrowser
-      - REST
+      - REST:
+        depends: PhpBrowser
+        url: http://localhost/api/
+      - Yii2
+
     config:
         Yii2:
             configFile: 'tests/functional/_config.php'
         REST:
-            url: 'http://127.0.0.1'
+            url: 'http://localhost'
         PhpBrowser:
-            url: 'http://127.0.0.1'
+            url: 'http://localhost'
