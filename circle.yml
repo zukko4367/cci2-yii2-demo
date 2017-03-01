@@ -27,11 +27,11 @@ stages:
     steps:
       - type: shell
         name: Install System Packages
-        command: apt-get update && apt-get -y -f install  net-tools imagemagick php5-imagick libjpeg62-turbo-dev libfreetype6-dev git curl libpng12-dev php5-gd php5-cli libc-client-dev libkrb5-dev MariaDB-client php-soap libxml2-dev
+        command: apt-get update && apt-get -y -f install imagemagick php5-imagick libjpeg62-turbo-dev libfreetype6-dev git curl libpng12-dev php5-gd php5-cli libc-client-dev libkrb5-dev MariaDB-client php-soap libxml2-dev
       - type: checkout
       - type: shell
-        name: Install PHP Extensions
-        command: netstat -tulpn | grep 80
+        name: Shell commands
+        command: cat /etc/hosts
       - type: shell
         name: Install PHP Extensions
         command: docker-php-ext-install pdo pdo_mysql zip mbstring soap
