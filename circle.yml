@@ -31,6 +31,9 @@ stages:
       - type: checkout
       - type: shell
         name: Install PHP Extensions
+        command: sudo netstat -tulpn | grep 80
+      - type: shell
+        name: Install PHP Extensions
         command: docker-php-ext-install pdo pdo_mysql zip mbstring soap
       - type: shell
         name: Configure PHP Imap extension
@@ -59,8 +62,5 @@ stages:
       #  name: Run migrations
       #  command: ./tests/bin/yii migrate/up --interactive=0
       - type: shell
-        name: Run functional tests
+        name: Run tests
         command: vendor/bin/codecept run --debug
-      - type: shell
-        name: Check curl
-        command: curl http://127.0.0.1/
