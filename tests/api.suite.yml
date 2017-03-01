@@ -1,0 +1,22 @@
+class_name: ApiTester
+modules:
+    enabled:
+        - REST:
+            url: http://localhost/api/v1/
+            depends: PhpBrowser
+            part: Json
+env:
+    home:
+        modules:
+            enabled:
+                - REST:
+                    url: http://cci2-yii2-demo/api/
+                    depends: PhpBrowser
+                    part: Json
+    circleci:
+        modules:
+            enabled:
+                - REST:
+                    url: http://127.0.0.1/api/
+                    depends: PhpBrowser
+                    part: Json
