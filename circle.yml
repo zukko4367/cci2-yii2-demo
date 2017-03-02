@@ -27,13 +27,16 @@ containerInfo:
 stages:
   build:
     workDir: /var/www/html
+    enviroment:
+      SITE_NAME: "cci2-yii2-demo.com"
     steps:
+      - type: shell
+        name: Modify hosts file
+        command: echo 127.0.0.1 $SITE_NAME | tee -a /etc/hosts
+
       - type: shell
         name: Install System Packages
         command: apt-get update && apt-get -y -f install imagemagick php5-imagick libjpeg62-turbo-dev libfreetype6-dev git curl libpng12-dev php5-gd php5-cli libc-client-dev libkrb5-dev MariaDB-client php-soap libxml2-dev
-      - type: shell
-        name: Modify hosts file
-        command: echo 127.0.0.1 cci2-yii2-demo.com | tee -a /etc/hosts
       - type: shell
         name: Install PHP Extensions
         command: docker-php-ext-install pdo pdo_mysql zip mbstring soap
@@ -46,7 +49,9 @@ stages:
       - type: shell
         name: Install Imap & gd extensions
         command: docker-php-ext-install imap gd
+
       - type: checkout
+
       - type: shell
         name: Install Composer
         command: |
@@ -57,20 +62,16 @@ stages:
       - type: shell
         name: Install Project Dependencies
         command: composer install
-      - type: shell
-        name: phpinfo
-        command: php -i
+#      - type: shell
+#        name: phpinfo
+#        command: php -i
       - type: shell
         shell: /bin/bash --login #recommend running bash in login shell mode
-        name: Modify apache config
+        name: Modify apache configiguration
         command: |
           a2enmod rewrite
-          sed -i "s/\/var\/www\/html/\/var\/www\/html\/web/g" /etc/apache2/sites-available/000-default.conf
-          cp cci2-yii2-demo.com.conf /etc/apache2/sites-available/cci2-yii2-demo.com.conf
-          a2ensite cci2-yii2-demo.com.conf
-          cat /etc/apache2/sites-available/000-default.conf
-          cat /etc/apache2/sites-available/cci2-yii2-demo.com.conf
-
+          cp $SITE_NAME.conf /etc/apache2/sites-available/$SITE_NAME.conf
+          a2ensite $SITE_NAME.conf
       - type: shell
         shell: /bin/bash --login #recommend running bash in login shell mode
         name: start Apache webserver
@@ -78,29 +79,30 @@ stages:
           service apache2 start
       - type: shell
         shell: /bin/bash --login #recommend running bash in login shell mode
-        name: availiable hosts
+        name: Show availiable hosts
         command: |
           apache2ctl -S
       - type: shell
-        name: checks2
+        name: Check site access by curl
         shell: /bin/bash --login #recommend running bash in login shell mode
         command: |
-          curl -v http://localhost:80/index.html
-          curl -v http://127.0.0.1:80/index.html
-          curl -v http://cci2-yii2-demo.com/index.html
+#          curl -v http://localhost:80/index.html
+#          curl -v http://127.0.0.1:80/index.html
+          curl -v http://$SITE_NAME/index.html
       - type: shell
-        name: apache logs
+        name: Show apache logs
         shell: /bin/bash --login #recommend running bash in login shell mode
         command: |
           ls -la /var/log/apache2/
           tail /var/log/apache2/error.log
           tail /var/log/apache2/cci2-yii2-demo-access.log
           tail /var/log/apache2/cci2-yii2-demo-error.log
-          #mysql --password=$DB_PASSWORD --user=$DB_USERNAME --database=$DB_DATABASE --host=$DB_HOST
-        # unit
-      #- type: shell
-      #  name: Run migrations
-      #  command: ./tests/bin/yii migrate/up --interactive=0
+#      - type: shell
+#        name: Run migrations
+#        command: ./tests/bin/yii migrate/up --interactive=0
+#      - type: shell
+#        name: Connect to db
+#        command: mysql --password=$DB_PASSWORD --user=$DB_USERNAME --database=$DB_DATABASE --host=$DB_HOST
       - type: shell
         name: Run tests
         command: vendor/bin/codecept run --debug --env circleci
