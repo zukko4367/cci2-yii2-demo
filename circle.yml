@@ -58,13 +58,15 @@ stages:
         command: php -i
       - type: shell
         shell: /bin/bash --login #recommend running bash in login shell mode
+        name: checks
         command: |
           pwd
           ls -la
           service apache2 start
-        - type: shell
-          shell: /bin/bash --login #recommend running bash in login shell mode
-          command: |
+      - type: shell
+        name: checks2
+        shell: /bin/bash --login #recommend running bash in login shell mode
+        command: |
           curl -v http://localhost:80/web
           #mysql --password=$DB_PASSWORD --user=$DB_USERNAME --database=$DB_DATABASE --host=$DB_HOST
         # unit
