@@ -16,6 +16,7 @@ containerInfo:
       - QUEUE_DRIVER=sync
       - TZ=Europe/Moscow
       - TIMEZONE=Europe/Moscow
+
     ports:
         - 80:80
   - image: mariadb:5.5
@@ -26,6 +27,9 @@ containerInfo:
 stages:
   build:
     workDir: /var/www/html
+    environment:
+      - DEFAULT_PATH: "\/var\/www\/html"
+      - YII_WEB_DIR_PATH: "\/var\/www\/html\/web"
     steps:
       - type: shell
         name: Install System Packages
@@ -65,8 +69,8 @@ stages:
         shell: /bin/bash --login #recommend running bash in login shell mode
         name: checks
         command: |
-          ls -la /etc/apache2/sites-available
-          service apache2 start
+          sed -i 's/$DEFAULT_PATH/$YII_WEB_DIR_PATH/g' /etc/apache2/sites-available/000-default.conf
+          cat /etc/apache2/sites-available/000-default.conf
       - type: shell
         name: checks2
         shell: /bin/bash --login #recommend running bash in login shell mode
