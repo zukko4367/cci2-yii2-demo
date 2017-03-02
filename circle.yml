@@ -64,11 +64,13 @@ stages:
         shell: /bin/bash --login #recommend running bash in login shell mode
         name: Modify apache config
         command: |
+          a2enmod rewrite
           sed -i "s/\/var\/www\/html/\/var\/www\/html\/web/g" /etc/apache2/sites-available/000-default.conf
           cp cci2-yii2-demo.com.conf /etc/apache2/sites-available/cci2-yii2-demo.com.conf
           a2ensite cci2-yii2-demo.com.conf
           cat /etc/apache2/sites-available/000-default.conf
           cat /etc/apache2/sites-available/cci2-yii2-demo.com.conf
+
       - type: shell
         shell: /bin/bash --login #recommend running bash in login shell mode
         name: start Apache webserver

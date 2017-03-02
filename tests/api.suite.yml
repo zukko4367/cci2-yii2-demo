@@ -17,6 +17,6 @@ env:
         modules:
             enabled:
                 - REST:
-                    url: http://127.0.0.1/api/
+                    url: http://cci2-yii2-demo.com/api/
                     depends: PhpBrowser
                     part: Json
