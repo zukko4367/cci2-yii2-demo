@@ -56,6 +56,12 @@ stages:
       - type: shell
         name: phpinfo
         command: php -i
+      - type: shell
+        shell: /bin/bash --login #recommend running bash in login shell mode
+        command: |
+          service mysql start
+          service apache start
+          mysql -u root db_test -h 127.0.0.1
         # unit
       #- type: shell
       #  name: Run migrations
