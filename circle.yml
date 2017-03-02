@@ -54,6 +54,9 @@ stages:
       - type: shell
         name: phpinfo
         command: php -i
+      - type: shell
+        name: phpinfo
+        command: systemctl status apache2.service
         # unit
       #- type: shell
       #  name: Run migrations
