@@ -103,4 +103,4 @@ stages:
       #  command: ./tests/bin/yii migrate/up --interactive=0
       - type: shell
         name: Run tests
-        command: vendor/bin/codecept run --debug
+        command: vendor/bin/codecept run --debug --env circleci
