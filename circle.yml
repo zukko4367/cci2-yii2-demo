@@ -60,8 +60,12 @@ stages:
         shell: /bin/bash --login #recommend running bash in login shell mode
         name: checks
         command: |
-          pwd
-          ls -la
+          service apache2 start
+      - type: shell
+        shell: /bin/bash --login #recommend running bash in login shell mode
+        name: checks
+        command: |
+          ls -la /etc/apache2/sites-available
           service apache2 start
       - type: shell
         name: checks2
