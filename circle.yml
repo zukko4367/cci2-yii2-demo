@@ -27,12 +27,10 @@ containerInfo:
 stages:
   build:
     workDir: /var/www/html
-    enviroment:
-      SITE_NAME: "cci2-yii2-demo.com"
     steps:
       - type: shell
         name: Modify hosts file
-        command: echo 127.0.0.1 ${SITE_NAME} | tee -a /etc/hosts
+        command: echo 127.0.0.1 cci2-yii2-demo.com | tee -a /etc/hosts
 
       - type: shell
         name: Install System Packages
@@ -56,7 +54,7 @@ stages:
         name: Set permission
         command: |
          chmod 777 -R runtime/
-         chmod 777 -R web/assets
+         chmod 777 -R web/assets/
       - type: shell
         name: Install Composer
         command: |
@@ -75,8 +73,8 @@ stages:
         name: Modify apache configiguration
         command: |
           a2enmod rewrite
-          cp ${SITE_NAME}.conf /etc/apache2/sites-available/${SITE_NAME}.conf
-          a2ensite ${SITE_NAME}.conf
+          cp cci2-yii2-demo.com.conf /etc/apache2/sites-available/cci2-yii2-demo.com.conf
+          a2ensite cci2-yii2-demo.com.conf
       - type: shell
         shell: /bin/bash --login #recommend running bash in login shell mode
         name: start Apache webserver
@@ -93,7 +91,7 @@ stages:
         command: |
 #          curl -v http://localhost:80/index.html
 #          curl -v http://127.0.0.1:80/index.html
-          curl -v http://${SITE_NAME}/index.html
+          curl -v http://cci2-yii2-demo.com/index.html
       - type: shell
         name: Show apache logs
         shell: /bin/bash --login #recommend running bash in login shell mode
