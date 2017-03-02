@@ -27,9 +27,6 @@ containerInfo:
 stages:
   build:
     workDir: /var/www/html
-    environment:
-      - DEFAULT_PATH: "\/var\/www\/html"
-      - YII_WEB_DIR_PATH: "\/var\/www\/html\/web"
     steps:
       - type: shell
         name: Install System Packages
@@ -62,15 +59,15 @@ stages:
         command: php -i
       - type: shell
         shell: /bin/bash --login #recommend running bash in login shell mode
-        name: checks
+        name: Modify apache config
         command: |
-          service apache2 start
+          sed -i "s/\/var\/www\/html/\/var\/www\/html\/web/g" /etc/apache2/sites-available/000-default.conf
+          cat /etc/apache2/sites-available/000-default.conf
       - type: shell
         shell: /bin/bash --login #recommend running bash in login shell mode
-        name: checks
+        name: start Apache webserver
         command: |
-          sed -i 's/$DEFAULT_PATH/$YII_WEB_DIR_PATH/g' /etc/apache2/sites-available/000-default.conf
-          cat /etc/apache2/sites-available/000-default.conf
+          service apache2 start
       - type: shell
         name: checks2
         shell: /bin/bash --login #recommend running bash in login shell mode
