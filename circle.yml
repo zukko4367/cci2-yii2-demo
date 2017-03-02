@@ -59,7 +59,8 @@ stages:
       - type: shell
         shell: /bin/bash --login #recommend running bash in login shell mode
         command: |
-          mysql --password=$DB_PASSWORD --user=$DB_USERNAME --database=$DB_DATABASE --host=$DB_HOST
+          service apache2 start
+          #mysql --password=$DB_PASSWORD --user=$DB_USERNAME --database=$DB_DATABASE --host=$DB_HOST
         # unit
       #- type: shell
       #  name: Run migrations
