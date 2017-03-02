@@ -53,6 +53,11 @@ stages:
       - type: checkout
 
       - type: shell
+        name: Set permission
+        command: |
+         chmod 777 -R runtime/
+         chmod 777 -R web/assets
+      - type: shell
         name: Install Composer
         command: |
          curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
