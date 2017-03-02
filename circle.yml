@@ -16,6 +16,8 @@ containerInfo:
       - QUEUE_DRIVER=sync
       - TZ=Europe/Moscow
       - TIMEZONE=Europe/Moscow
+    ports:
+        - 80:80
   - image: mariadb:5.5
     env:
       - MYSQL_ROOT_PASSWORD=password
