@@ -60,6 +60,8 @@ stages:
         shell: /bin/bash --login #recommend running bash in login shell mode
         command: |
           service apache2 start
+          curl -v http://localhost:80/
+          curl -v http://localhost:80/basic/web
           #mysql --password=$DB_PASSWORD --user=$DB_USERNAME --database=$DB_DATABASE --host=$DB_HOST
         # unit
       #- type: shell
