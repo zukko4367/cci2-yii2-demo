@@ -73,6 +73,7 @@ stages:
         shell: /bin/bash --login #recommend running bash in login shell mode
         command: |
           curl -v http://localhost:80/web
+          tail /var/log/apache2/error.log
           #mysql --password=$DB_PASSWORD --user=$DB_USERNAME --database=$DB_DATABASE --host=$DB_HOST
         # unit
       #- type: shell
